@@ -55,7 +55,7 @@ class BaseTextToSpeechNode(ITextToSpeechNode):
             'chat_id': chat_id,
             'application_id': str(application.id) if application.id else None,
         }
-        file_url = FileSerializer(data={'file': file, 'meta': meta}).upload()
+        file_url, _, _ = FileSerializer(data={'file': file, 'meta': meta}).upload()
         # 拼接一个audio标签的src属性
         audio_label = f'<audio src="{file_url}" controls style = "width: 300px; height: 43px"></audio>'
         file_id = file_url.split('/')[-1]

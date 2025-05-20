@@ -506,7 +506,9 @@ class ChatView(APIView):
             file_ids = []
             debug = request.data.get("debug", "false").lower() == "true"
             meta = {'application_id': application_id, 'chat_id': chat_id, 'debug': debug}
+            need_change = request.data.get("need_change", "false").lower() == "true"
             for file in files:
-                file_url = FileSerializer(data={'file': file, 'meta': meta}).upload()
-                file_ids.append({'name': file.name, 'url': file_url, 'file_id': file_url.split('/')[-1]})
+                file_url, file_name, local_path = FileSerializer(data={'file': file, 'meta': meta, 'need_change': need_change}).upload()
+                # file_ids.append({'name': file.name, 'url': file_url, 'file_id': file_url.split('/')[-1]})
+                file_ids.append({'name': file_name, 'url': file_url, 'file_id': file_url.split('/')[-1], 'localPath': local_path})
             return result.success(file_ids)

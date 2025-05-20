@@ -350,7 +350,7 @@ const localLoading = computed({
 const upload = ref()
 
 const imageExtensions = ['JPG', 'JPEG', 'PNG', 'GIF', 'BMP']
-const documentExtensions = ['PDF', 'DOCX', 'TXT', 'XLS', 'XLSX', 'MD', 'HTML', 'CSV']
+const documentExtensions = ['PDF', 'DOCX', 'TXT', 'XLS', 'XLSX', 'MD', 'HTML', 'CSV', 'eml']
 const videoExtensions: any = []
 const audioExtensions = ['MP3', 'WAV', 'OGG', 'AAC', 'M4A']
 let otherExtensions = ['PPT', 'DOC']
@@ -415,6 +415,21 @@ const uploadFile = async (file: any, fileList: any) => {
   }
 
   const formData = new FormData()
+  let modifiedFileName = file.name;
+  if (modifiedFileName.endsWith('.eml')) {
+    modifiedFileName = modifiedFileName.replace('.eml', '.docx');
+  }
+
+  if (file.raw.name.endsWith('.eml')) {
+    const newName = file.raw.name.replace(/\.eml$/i, '.docx');
+    const newFile = new File([file.raw], newName, { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+    
+    file.raw = newFile;
+    file.name = newName;
+    formData.append('need_change', 'true')
+  }
+  //formData.append('file', file.raw, modifiedFileName);
+
   formData.append('file', file.raw, file.name)
   //
   const extension = file.name.split('.').pop().toUpperCase() // 获取文件后缀名并转为小写
@@ -498,6 +513,8 @@ const uploadFile = async (file: any, fileList: any) => {
       })
       if (!inputValue.value && uploadImageList.value.length > 0) {
         inputValue.value = t('chat.uploadFile.imageMessage')
+      }else if(uploadDocumentList.value && uploadDocumentList.value.length > 0){
+        inputValue.value = t('chat.uploadFile.documentMessage')
       }
     })
 }

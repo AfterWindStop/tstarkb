@@ -57,7 +57,7 @@ class XinferenceTextToImage(MaxKBBaseModel, BaseTextToImage):
             meta = {
                 'debug': True,
             }
-            file_url = FileSerializer(data={'file': file, 'meta': meta}).upload()
+            file_url, _, _ = FileSerializer(data={'file': file, 'meta': meta}).upload()
             file_urls.append(f'http://localhost:8080{file_url}')
 
         return file_urls

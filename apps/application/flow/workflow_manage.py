@@ -251,13 +251,21 @@ class WorkflowManage:
             audio_list = []
         if other_list is None:
             other_list = []
+
+        # 为文件列表中的项目添加 localPath 字段
+        def add_local_path(file_list):
+            for item in file_list:
+                if isinstance(item, dict) and 'name' in item and 'localPath' not in item:
+                    item['localPath'] = f"/tmp/{item['name']}"
+            return file_list
+
         self.start_node_id = start_node_id
         self.start_node = None
         self.form_data = form_data
-        self.image_list = image_list
-        self.document_list = document_list
-        self.audio_list = audio_list
-        self.other_list = other_list
+        self.image_list = add_local_path(image_list)
+        self.document_list = add_local_path(document_list)
+        self.audio_list = add_local_path(audio_list)
+        self.other_list = add_local_path(other_list)
         self.params = params
         self.flow = flow
         self.context = {}
@@ -461,8 +469,7 @@ class WorkflowManage:
             node_result_future = self.run_node_future(current_node)
         try:
             is_stream = self.params.get('stream', True)
-            result = self.hand_event_node_result(current_node,
-                                                 node_result_future) if is_stream else self.hand_node_result(
+            result = self.hand_event_node_result(current_node,node_result_future) if is_stream else self.hand_node_result(
                 current_node, node_result_future)
             return result
         except Exception as e:

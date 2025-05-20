@@ -17,6 +17,8 @@ from common.field.common import UploadedFileField
 from common.util.field_message import ErrMessage
 from dataset.models import File
 from django.utils.translation import gettext_lazy as _
+from dataset.serializers.eml2docx import process_eml_files
+import os 
 
 mime_types = {"html": "text/html", "htm": "text/html", "shtml": "text/html", "css": "text/css", "xml": "text/xml",
               "gif": "image/gif", "jpeg": "image/jpeg", "jpg": "image/jpeg", "js": "application/javascript",
@@ -61,6 +63,7 @@ mime_types = {"html": "text/html", "htm": "text/html", "shtml": "text/html", "cs
 class FileSerializer(serializers.Serializer):
     file = UploadedFileField(required=True, error_messages=ErrMessage.image(_('file')))
     meta = serializers.JSONField(required=False, allow_null=True)
+    need_change = serializers.BooleanField(required=False, default=False)
 
     def upload(self, with_valid=True):
         if with_valid:
@@ -68,10 +71,46 @@ class FileSerializer(serializers.Serializer):
         meta = self.data.get('meta', None)
         if not meta:
             meta = {'debug': True}
-        file_id = meta.get('file_id', uuid.uuid1())
-        file = File(id=file_id, file_name=self.data.get('file').name, meta=meta)
-        file.save(self.data.get('file').read())
-        return f'/api/file/{file_id}'
+        original_file = self.data.get('file')
+        file_name = ''
+        local_path = ''
+        import tempfile
+        # 执行转换
+        original_name = original_file.name
+        if self.validated_data.get('need_change') is True:
+            # 执行eml文件转换成docx格式
+            try:
+                base_name = os.path.splitext(original_name)[0]  # 获取不带扩展名的文件名
+                with tempfile.TemporaryDirectory() as temp_dir:
+                    eml_file_path = os.path.join(temp_dir, original_name)  # 在临时目录中创建eml文件路径
+                    with open(eml_file_path, 'wb') as temp_eml_file:
+                        temp_eml_file.write(original_file.read())  # 将内存中的文件写入临时文件
+                    docx_file_path = os.path.join(temp_dir, f"{base_name}.docx")  # 生成docx文件路径
+                    from pathlib import Path
+                    process_eml_files(Path(eml_file_path))  # 调用转换函数
+                    file_id = meta.get('file_id', uuid.uuid1())
+                    file = File(id=file_id, file_name=os.path.basename(docx_file_path), meta=meta)
+                    file_name = os.path.basename(docx_file_path)
+                    # file = File(id=file_id, file_name=self.data.get('file').name, meta=meta)
+                    # file_name = self.data.get('file').name
+                    file.save(open(docx_file_path, 'rb').read())
+                local_path = eml_file_path
+            except Exception as e:
+                local_path = ''
+        else:
+            file_id = meta.get('file_id', uuid.uuid1())
+            file = File(id=file_id, file_name=self.data.get('file').name, meta=meta)
+            file_name = self.data.get('file').name
+            file_bytes = self.data.get('file').read()
+            file.save(file_bytes)
+            try:
+                local_path = f"/tmp/{file_name}"
+                with open(local_path, 'wb') as f:
+                    f.write(file_bytes)
+            except Exception as e:
+                local_path = ''
+        return f'/api/file/{file_id}', file_name, local_path
+
 
     class Operate(serializers.Serializer):
         id = serializers.UUIDField(required=True)

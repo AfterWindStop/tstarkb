@@ -212,7 +212,7 @@ const loading = ref(false)
 const fieldFormRef = ref()
 const InputRef = ref<InputInstance>()
 
-const documentExtensions = ['TXT', 'MD', 'DOCX', 'HTML', 'CSV', 'XLSX', 'XLS', 'PDF']
+const documentExtensions = ['TXT', 'MD', 'DOCX', 'HTML', 'CSV', 'XLSX', 'XLS', 'PDF', 'EML']
 const imageExtensions = ['JPG', 'JPEG', 'PNG', 'GIF']
 const audioExtensions = ['MP3', 'WAV', 'OGG', 'ACC', 'M4A']
 

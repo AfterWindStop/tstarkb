@@ -61,6 +61,7 @@ export default {
     limitMessage2: '个文件',
     sizeLimit: '单个文件大小不能超过',
     imageMessage: '请解析图片内容',
+    documentMessage: '请解析文档内容',
     errorMessage: '上传失败'
   },
   executionDetails: {

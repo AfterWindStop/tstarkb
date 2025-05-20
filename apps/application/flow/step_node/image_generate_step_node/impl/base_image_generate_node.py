@@ -44,7 +44,7 @@ class BaseImageGenerateNode(IImageGenerateNode):
                 'chat_id': chat_id,
                 'application_id': str(application.id) if application.id else None,
             }
-            file_url = FileSerializer(data={'file': file, 'meta': meta}).upload()
+            file_url, _, _ = FileSerializer(data={'file': file, 'meta': meta}).upload()
             file_urls.append(file_url)
         self.context['image_list'] = [{'file_id': path.split('/')[-1], 'url': path} for path in file_urls]
         answer = ' '.join([f"![Image]({path})" for path in file_urls])
