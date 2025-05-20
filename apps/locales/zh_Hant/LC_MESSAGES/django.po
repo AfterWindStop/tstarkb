@@ -2308,11 +2308,10 @@ msgstr "icon 圖標"
 #: community/apps/application/serializers/application_serializers.py:722
 #: community/apps/setting/serializers/valid_serializers.py:29
 msgid ""
-"The community version supports up to 5 applications. If you need more "
-"applications, please contact us (https://fit2cloud.com/)."
+"The community version supports up to 20 applications. If you need more "
+"applications, please contact us (https://www.tstar-tech.com/)."
 msgstr ""
-"社區版最多支持 5 個應用，如需擁有更多應用，請聯繫我們（https://"
-"fit2cloud.com/）"
+"社區版最多支持 20 個應用，如需擁有更多應用，請聯繫我們（https://www.tstar-tech.com/）"
 
 #: community/apps/application/serializers/application_serializers.py:583
 msgid "Query text"
@@ -7094,8 +7093,7 @@ msgid ""
 "The community version supports up to 2 users. If you need more users, please "
 "contact us (https://fit2cloud.com/)."
 msgstr ""
-"社區版最多支持 2 個用戶，如需擁有更多用戶，請聯繫我們（https://"
-"fit2cloud.com/）。"
+"社區版最多支持 2 個用戶，如需擁有更多用戶，請聯繫我們（https://www.tstar-tech.com/）。"
 
 #: community/apps/setting/serializers/valid_serializers.py:41
 #: community/apps/setting/swagger_api/valid_api.py:27

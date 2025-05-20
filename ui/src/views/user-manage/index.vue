@@ -165,10 +165,10 @@ function createUser() {
     } else if (res?.code === 400) {
       MsgConfirm(t('common.tip'), t('views.user.tip.professionalMessage'), {
         cancelButtonText: t('common.confirm'),
-        confirmButtonText: t('common.professional')
+        confirmButtonText: t('common.contactDeveloper')
       })
         .then(() => {
-          window.open('https://maxkb.cn/pricing.html', '_blank')
+          window.open('https://www.tstar-tech.com/', '_blank')
         })
         .catch(() => {})
     }

@@ -25,6 +25,7 @@ export default {
   search: '搜索',
   clear: '清空',
   professional: '购买专业版',
+  contactDeveloper : "联系开发者",
   createDate: '创建日期',
   createTime: '创建时间',
   operation: '操作',

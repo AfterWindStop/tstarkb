@@ -187,7 +187,7 @@ class RegisterSerializer(ApiMixin, serializers.Serializer):
 
     @valid_license(model=User, count=2,
                    message=_(
-                       "The community version supports up to 2 users. If you need more users, please contact us (https://fit2cloud.com/)."))
+                       "The community version supports up to 2 users. If you need more users, please contact us (https://www.tstar-tech.com/)."))
     @transaction.atomic
     def save(self, **kwargs):
         m = User(
@@ -636,6 +636,8 @@ class UserManageSerializer(serializers.Serializer):
             if email_or_username is not None:
                 query_set = query_set.filter(
                     Q(username__contains=email_or_username) | Q(email__contains=email_or_username))
+            # 排除用户名为'anonymous'的用户
+            # query_set = query_set.exclude(username='anonymous')
             query_set = query_set.order_by("-create_time")
             return query_set
 
@@ -774,7 +776,7 @@ class UserManageSerializer(serializers.Serializer):
 
     @valid_license(model=User, count=2,
                    message=_(
-                       'The community version supports up to 2 users. If you need more users, please contact us (https://fit2cloud.com/).'))
+                       'The community version supports up to 2 users. If you need more users, please contact us (https://www.tstar-tech.com/).'))
     @transaction.atomic
     def save(self, instance, with_valid=True):
         if with_valid:

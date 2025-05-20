@@ -413,7 +413,7 @@ class DataSetSerializers(serializers.ModelSerializer):
 
         @valid_license(model=DataSet, count=50,
                        message=_(
-                           'The community version supports up to 50 knowledge bases. If you need more knowledge bases, please contact us (https://fit2cloud.com/).'))
+                           'The community version supports up to 50 knowledge bases. If you need more knowledge bases, please contact us (https://www.tstar-tech.com/).'))
         @post(post_function=post_embedding_dataset)
         @transaction.atomic
         def save(self, instance: Dict, with_valid=True):

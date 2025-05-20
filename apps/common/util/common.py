@@ -144,10 +144,14 @@ def valid_license(model=None, count=None, message=None):
         def run(*args, **kwargs):
             xpack_cache = DBModelManage.get_model('xpack_cache')
             is_license_valid = xpack_cache.get('XPACK_LICENSE_IS_VALID', False) if xpack_cache is not None else False
+            # if model and ('username' in [f.name for f in model._meta.fields]):
+            #     record_count = QuerySet(model).exclude(username='anonymous').count()
+            # else:
+            #     record_count = QuerySet(model).count()
             record_count = QuerySet(model).count()
 
             if not is_license_valid and record_count >= count:
-                error_message = message or f'超出限制{count}, 请联系我们（https://fit2cloud.com/）。'
+                error_message = message or f'超出限制{count}, 请联系我们（https://www.tstar-tech.com/）。'
                 raise AppApiException(400, error_message)
 
             return func(*args, **kwargs)

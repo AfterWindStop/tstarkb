@@ -2273,8 +2273,8 @@ msgstr ""
 #: community/apps/application/serializers/application_serializers.py:722
 #: community/apps/setting/serializers/valid_serializers.py:29
 msgid ""
-"The community version supports up to 5 applications. If you need more "
-"applications, please contact us (https://fit2cloud.com/)."
+"The community version supports up to 20 applications. If you need more "
+"applications, please contact us (https://www.tstar-tech.com/)."
 msgstr ""
 
 #: community/apps/application/serializers/application_serializers.py:583
@@ -4012,7 +4012,7 @@ msgstr "Web source URL"
 #: community/apps/setting/serializers/valid_serializers.py:26
 msgid ""
 "The community version supports up to 50 knowledge bases. If you need more "
-"knowledge bases, please contact us (https://fit2cloud.com/)."
+"knowledge bases, please contact us (https://www.tstar-tech.com/)."
 msgstr ""
 
 #: community/apps/dataset/serializers/dataset_serializers.py:533
@@ -6928,7 +6928,7 @@ msgstr ""
 #: community/apps/users/serializers/user_serializers.py:777
 msgid ""
 "The community version supports up to 2 users. If you need more users, please "
-"contact us (https://fit2cloud.com/)."
+"contact us (https://www.tstar-tech.com/)."
 msgstr ""
 
 #: community/apps/setting/serializers/valid_serializers.py:41

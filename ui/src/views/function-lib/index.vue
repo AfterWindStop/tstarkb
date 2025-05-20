@@ -141,7 +141,7 @@
               <template #footer>
                 <div class="footer-content flex-between">
                   <div>
-                    <span v-if="item.template_id"> {{ $t('common.author') }}: MaxKB</span>
+                    <span v-if="item.template_id"> {{ $t('common.author') }}: TstarKB</span>
                   </div>
                   <div @click.stop>
                     <el-switch
@@ -249,7 +249,7 @@
               <div class="status-button"></div>
               <template #footer>
                 <div class="footer-content flex-between">
-                  <div>{{ $t('common.author') }}: MaxKB</div>
+                  <div>{{ $t('common.author') }}: TstarKB</div>
                   <div @click.stop>
                     <el-button type="primary" link @click="addInternalFunction(item)">
                       {{ $t('common.add') }}
@@ -506,9 +506,9 @@ function importFunctionLib(file: any) {
       if (e.code === 400) {
         MsgConfirm(t('common.tip'), t('views.application.tip.professionalMessage'), {
           cancelButtonText: t('common.confirm'),
-          confirmButtonText: t('common.professional')
+          confirmButtonText: t('common.contactDeveloper')
         }).then(() => {
-          window.open('https://maxkb.cn/pricing.html', '_blank')
+          window.open('https://www.tstar-tech.com/', '_blank')
         })
       }
     })

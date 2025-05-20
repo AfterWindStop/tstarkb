@@ -1,4 +1,3 @@
-·
 <template>
   <div class="top-bar-container border-b flex-between">
     <div class="flex-center h-full">
@@ -10,16 +9,16 @@
       <TopMenu></TopMenu>
     </div>
     <div class="flex-center avatar">
+      <!--
       <el-button
         v-if="!user.isEnterprise()"
         link
         type="primary"
-        @click="toUrl('https://maxkb.cn/pricing.html')"
+        @click="toUrl('https://www.tstar-tech.com/')"
         class="mr-8"
       >
         <AppIcon iconName="app-pricing" class="mr-8" style="font-size: 20px"></AppIcon>
-
-        {{ $t('common.professional') }}
+        {{ $t('common.contactDeveloper') }}
       </el-button>
       <el-tooltip
         effect="dark"
@@ -60,25 +59,7 @@
           @click="toUrl(user.themeInfo?.forumUrl)"
         ></AppIcon>
       </el-tooltip>
-      <!-- <el-dropdown trigger="click" type="primary">
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item
-              v-for="(lang, index) in langList"
-              :key="index"
-              :value="lang.value"
-              @click="changeLang(lang.value)"
-              >{{ lang.label }}</el-dropdown-item
-            >
-          </el-dropdown-menu>
-        </template>
-        <AppIcon
-          iconName="app-translate"
-          class="cursor color-secondary mr-16 ml-8"
-          style="font-size: 20px"
-        >
-        </AppIcon>
-      </el-dropdown> -->
+      -->
       <Avatar></Avatar>
     </div>
   </div>
