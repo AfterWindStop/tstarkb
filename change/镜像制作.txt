@@ -1,0 +1,1 @@
+build执行前要把悬空镜像删除否则镜像文件会很大sudo docker build -t tstarkb:20250519 -f ./installer/Dockerfile .sudo docker save -o tstarkb-20250519.tar tstarkb:20250519docker load -i C:\public_dev\tstarkb-20250519.tar删除容器：sudo docker ps -asudo docker stop de7ef755133esudo docker rm  de7ef755133e删除镜像：sudo docker imagessudo docker rmi 16b0546a0091删除悬空镜像：docker system prune -f
