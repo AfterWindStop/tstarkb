@@ -1,12 +1,23 @@
 # 数据库链接信息
+DB_ENGINE: django.db.backends.postgresql_psycopg2
 DB_NAME: maxkb
+DB_USER: postgres
+DB_PASSWORD: 123456
 DB_HOST: localhost
 DB_PORT: 5432
-DB_USER: root
-DB_PASSWORD: xxxxxxx
-DB_ENGINE: django.db.backends.postgresql_psycopg2
+
+# 在线版本postgresql
+# DB_ENGINE: django.db.backends.postgresql_psycopg2
+# DB_NAME: neondb
+# DB_USER: neondb_owner
+# DB_PASSWORD: npg_rM70HqRkTFnL
+# DB_HOST: ep-hidden-tooth-a5v0d3rp-pooler.us-east-2.aws.neon.tech
+# DB_PORT: 5432
+
 
 DEBUG: false
 
 TIME_ZONE: Asia/Shanghai
 
+EMBEDDING_MODEL_PATH: /opt/maxkb/model/
+EMBEDDING_MODEL_NAME: /opt/maxkb/model/shibing624_text2vec-base-chinese
