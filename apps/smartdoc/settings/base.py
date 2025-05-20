@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.auth',
     'rest_framework',
     "drf_yasg",  # swagger 接口
     'django_filters',  # 条件过滤
