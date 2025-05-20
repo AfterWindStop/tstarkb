@@ -183,6 +183,29 @@ class Login(APIView):
          get_details=_get_details,
          get_operation_object=lambda r, k: {'name': r.data.get('username')})
     def post(self, request: Request):
+        """首次登录的时候创建一个匿名用户"""
+        # from users.models import User
+        # from django.db.models import QuerySet
+        # import uuid
+        # from django.utils import timezone
+        # from django.contrib.auth.hashers import make_password
+        # # 检查是否存在匿名用户
+        # if QuerySet(User).filter(username='anonymous').count() == 0:
+        #     User.objects.create(
+        #         id='10000000-0000-0000-0000-000000000001',
+        #         email=' ',
+        #         phone=' ',
+        #         username='anonymous',
+        #         nick_name='系统管理员',
+        #         password='e10adc3949ba59abbe56e057f20f883e',
+        #         role='ADMIN',
+        #         is_active=True,
+        #         create_time=timezone.now(),
+        #         update_time=timezone.now(),
+        #         source='LOCAL',
+        #         language='zh-CN'
+        #     )
+
         login_request = LoginSerializer(data=request.data)
         # 校验请求参数
         user = login_request.is_valid(raise_exception=True)
@@ -190,6 +213,58 @@ class Login(APIView):
         token_cache.set(token, user, timeout=JWT_AUTH['JWT_EXPIRATION_DELTA'])
         return result.success(token)
 
+class getToken(APIView):
+
+    @action(methods=['GET'], detail=False)
+    def get(self, request: Request):
+        import sqlite3
+        import base64
+        import json
+        import os
+        from smartdoc.conf import PROJECT_DIR
+        db_path = os.path.join(PROJECT_DIR, 'data', 'cache', 'token_cache', 'cache.db')
+
+        tokens = {}
+        try:
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            cursor.execute("SELECT key FROM Cache")
+            rows = cursor.fetchall()
+
+            for row in rows:
+                key = row[0]
+                # 解析 key，提取用户名
+                # key 的格式为 default:<token_payload>:<random_string>
+                token_payload = key.split(':')[1]
+                decoded_bytes = base64.urlsafe_b64decode(token_payload + '==')
+                decoded_str = decoded_bytes.decode('utf-8')
+                user_info = json.loads(decoded_str)
+
+                username = user_info.get('username')
+                if username:
+                    tokens[username] = key.split(':', 1)[1]
+
+        except Exception as e:
+            return {}
+
+        finally:
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+
+        return result.success(tokens)
+
+class getHost(APIView):
+    @action(methods=['GET'], detail=False)
+    def get(self, request: Request):
+        try:
+            host = request.META.get('HTTP_HOST', '')
+            if not host:
+                return {}
+            return result.success(host)
+        except Exception as e:
+            return {}
 
 class Register(APIView):
 
