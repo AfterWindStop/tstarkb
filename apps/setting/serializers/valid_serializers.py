@@ -23,13 +23,13 @@ from django.utils.translation import gettext_lazy as _
 model_message_dict = {
     'dataset': {'model': DataSet, 'count': 50,
                 'message': _(
-                    'The community version supports up to 50 knowledge bases. If you need more knowledge bases, please contact us (https://fit2cloud.com/).')},
-    'application': {'model': Application, 'count': 5,
+                    'The community version supports up to 50 knowledge bases. If you need more knowledge bases, please contact us (https://www.tstar-tech.com/).')},
+    'application': {'model': Application, 'count': 20,
                     'message': _(
-                        'The community version supports up to 5 applications. If you need more applications, please contact us (https://fit2cloud.com/).')},
+                        'The community version supports up to 20 applications. If you need more applications, please contact us (https://www.tstar-tech.com/).')},
     'user': {'model': User, 'count': 2,
              'message': _(
-                 'The community version supports up to 2 users. If you need more users, please contact us (https://fit2cloud.com/).')}
+                 'The community version supports up to 2 users. If you need more users, please contact us (https://www.tstar-tech.com/).')}
 }
 
 
@@ -49,7 +49,7 @@ class ValidSerializer(serializers.Serializer):
         if not is_license_valid:
             if self.data.get('valid_count') != model_value.get('count'):
                 raise AppApiException(400, model_value.get('message'))
-            if QuerySet(
-                    model_value.get('model')).count() >= model_value.get('count'):
+            # if QuerySet(model_value.get('model')).exclude(username='anonymous').count() >= model_value.get('count'):
+            if QuerySet(model_value.get('model')).count() >= model_value.get('count'):
                 raise AppApiException(400, model_value.get('message'))
         return True
